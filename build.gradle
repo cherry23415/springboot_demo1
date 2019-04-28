@@ -1,0 +1,40 @@
+group 'springboot_demo1'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+buildscript {
+    ext {
+        springbootVersion = "2.0.0.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springbootVersion}")
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url "http://nexus.miz.so:8081/nexus/content/groups/public/" }
+    mavenCentral()
+}
+configurations {
+    //remove default logger
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile 'mysql:mysql-connector-java:5.1.9'
+    //log4j2
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
+    //数据库连接池
+    compile "com.alibaba:druid-spring-boot-starter:1.1.0"
+}
