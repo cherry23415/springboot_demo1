@@ -21,7 +21,6 @@ buildscript {
 
 repositories {
     mavenLocal()
-    maven { url "http://nexus.miz.so:8081/nexus/content/groups/public/" }
     mavenCentral()
 }
 configurations {
