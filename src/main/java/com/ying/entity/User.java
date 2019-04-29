@@ -1,11 +1,17 @@
 package com.ying.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * @author lyz
  */
+@Data
 @Entity
+@Table(name = "t_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,27 +23,7 @@ public class User {
     @Column
     private String email;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp birthday;
 }

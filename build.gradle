@@ -35,6 +35,9 @@ dependencies {
     compile 'mysql:mysql-connector-java:5.1.9'
     //log4j2
     compile('org.springframework.boot:spring-boot-starter-log4j2')
+    //热部署
+//    compile('org.springframework.boot:spring-boot-devtools')
     //数据库连接池
     compile "com.alibaba:druid-spring-boot-starter:1.1.0"
+    compile "org.projectlombok:lombok"
 }
