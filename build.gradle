@@ -39,4 +39,7 @@ dependencies {
     //数据库连接池
     compile "com.alibaba:druid-spring-boot-starter:1.1.0"
     compile "org.projectlombok:lombok"
+
+    //QL
+    compile "com.alibaba:QLExpress:3.2.3"
 }
