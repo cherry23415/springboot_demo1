@@ -1,26 +1,25 @@
 import com.ql.util.express.*;
-import com.ql.util.express.instruction.op.OperatorBase;
 import com.ying.ApplicationDemo;
-import com.ying.ql.OperatorContextPut;
+import com.ying.ql.QlExpressUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationDemo.class)
 public class SpringbootDemoTest {
 
+    @Autowired
+    private QlExpressUtil qlExpressUtil;
+
     @Test
     public void testQL1() throws Exception {
         ExpressRunner runner = new ExpressRunner();
-//        DefaultContext<String, Object> context = new DefaultContext<>();
-//        context.put("a", 1);
-//        context.put("b", 2);
-//        String express = "a+b";
-//        Object r = runner.execute(express, context, null, true, false);
-//        Assert.assertEquals(3, r);
-
         //数据的预先加载
         ExpressRemoteCacheRunner cacheRunner = new LocalExpressCacheRunner(runner);
         cacheRunner.loadCache("计算平均成绩", "(语文+数学+英语)/3.0");
@@ -46,38 +45,27 @@ public class SpringbootDemoTest {
 
     @Test
     public void operateLoopTest() throws Exception {
-        final String express = "int n=10;" +
-                "int sum=0;int i = 0;" +
+        String express = "int sum=0;int i = 0;" +
                 "for(i=0;i<n;i++){" +
                 "sum=sum+i;" +
                 "}" +
                 "return sum;";
-        ExpressRunner runner = new ExpressRunner();
-        DefaultContext<String, Object> context = new DefaultContext<>();
-        Object r = runner.execute(express, context, null, true, false);
-        System.out.println(r);
-    }
-
-    @Test
-    public void logicalTernaryOperationsTest() throws Exception {
-//        final String express = "int a=1;int b=2;int max = a>b?a:b;";
-        final String express = "a=1;b=2;max(a,b);";
-        ExpressRunner runner = new ExpressRunner();
-        DefaultContext<String, Object> context = new DefaultContext<>();
-        Object r = runner.execute(express, context, null, true, false);
-        System.out.println(r);
+        Map<String, Object> map = new HashMap<>();
+        map.put("n", 10);
+        System.out.println(qlExpressUtil.execute(express, map));
     }
 
     @Test
     public void testQL2() throws Exception {
-        ExpressRunner runner = new ExpressRunner();
-        OperatorBase op = new OperatorContextPut("contextPut");
-        runner.addFunction("contextPut", op);
-        String exp = "contextPut('success','false');contextPut('error','错误信息');contextPut('warning','提醒信息')";
-        IExpressContext<String, Object> context = new DefaultContext<String, Object>();
-        context.put("success", "true");
-        Object result = runner.execute(exp, context, null, false, true);
-        System.out.println(result);
-        System.out.println(context);
+//        String express = "max(a,b)";
+//        String express = "min(a,b)";
+//        String express = "round(19.08,1)";
+        String express = "a>b?a:b";
+//        String express = "a+b";
+        Map<String, Object> map = new HashMap<>();
+        map.put("a", 8);
+        map.put("b", 2);
+        Object re = qlExpressUtil.execute(express, map);
+        System.out.println(re);
     }
 }
