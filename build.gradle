@@ -47,4 +47,9 @@ dependencies {
     compile "org.apache.poi:poi:4.1.1"
     compile "org.apache.poi:poi-ooxml:4.1.1"
     compile "org.apache.poi:poi-ooxml-schemas:4.1.1"
+
+    //pdf
+    compile "com.itextpdf:itextpdf:5.5.9"
+    compile "com.itextpdf:itext-asian:5.2.0"
+
 }
